@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
-    using SnakeCore.Objects;
+    using SnakeCore.Controllers;
+    using SnakeCore.Models;
     using SnakeCore.Tools;
+    using SnakeCore.View;
 
     public class SnakeGame
     {
@@ -15,7 +17,7 @@
             double changeDifficulty = 1;
             double worstDifficulty = 50;
 
-            this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver);            
+            this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver);
         }
 
         private void GameOver()
@@ -34,7 +36,7 @@
             Vector2 right = new Vector2(1, 0);
 
             List<Vector2> possibleDirections = new List<Vector2>()
-            { 
+            {
                 down,
                 left,
                 right
@@ -42,34 +44,50 @@
 
             Random random = new Random();
 
-            Vector2 selectedRandomDirection = possibleDirections[random.Next(0, possibleDirections.Count)];            
+            Vector2 selectedRandomDirection = possibleDirections[random.Next(0, possibleDirections.Count)];
 
             Vector2 direction = selectedRandomDirection;
 
             Apple apple = new Apple();
+            AppleView appleView = new AppleView();
+
             Snake snake = new Snake();
+            SnakeView snakeView = new SnakeView(snake);
+
+            AppleController appleController = new AppleController();
+            SnakeController snakeController = new SnakeController(snake);
+            RockController rockController = new RockController();
+
             List<Rock> rocks = new List<Rock>();
+            RockView rockView = new RockView(rocks);
 
             while (!isGameOver)
             {
                 this.InputHandler(direction);
-                snake.Update(direction);
-                apple.Update(snake);
+                snakeController.Update(direction);
+                appleController.Update(snake, apple);
 
-                this.SnakeAppleCollision(snake, apple, rocks);
+                if (this.SnakeAppleCollision(snake, apple))
+                {
+                    rocks.Add(new Rock());
+                    rocks.Add(new Rock());
+                    rocks.Add(new Rock());
+
+                    const int NumberOfRocksAdded = 3;
+                    for (int i = rocks.Count - NumberOfRocksAdded; i < rocks.Count; i++)
+                    {
+                        rockController.Generate(snake, rocks[i]);
+                    }
+                }
 
                 if (this.SnakeRocksCollision(snake, rocks) || this.SnakeSelfCollision(snake))
                 {
                     isGameOver = true;
                 }
 
-                foreach (var rock in rocks)
-                {
-                    rock.Draw();
-                }
-
-                apple.Draw();
-                snake.Draw(direction);
+                rockView.Draw();
+                appleView.Draw(apple);
+                snakeView.Draw(direction);
 
                 if (difficulty >= worstDifficulty)
                 {
@@ -78,8 +96,9 @@
 
                 int sleepTime = (int)Math.Max(Math.Round(difficulty), worstDifficulty);
                 Thread.Sleep(sleepTime);
-                apple.Delete();
-                snake.Delete();
+
+                appleView.Delete(apple);
+                snakeView.Delete();
             }
 
             this.GameOver();
@@ -117,7 +136,7 @@
             }
         }
 
-        private void SnakeAppleCollision(Snake snake, Apple apple, List<Rock> rocks)
+        private bool SnakeAppleCollision(Snake snake, Apple apple)
         {
             if (apple.IsActive && snake.SnakeElements[0].IsEqualTo(apple.Position))
             {
@@ -126,9 +145,11 @@
                     new Vector2(
                         snake.SnakeElements[snake.SnakeElements.Count - 1].X,
                         snake.SnakeElements[snake.SnakeElements.Count - 1].Y));
-                rocks.Add(new Rock(snake));
-                rocks.Add(new Rock(snake));
-                rocks.Add(new Rock(snake));
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
