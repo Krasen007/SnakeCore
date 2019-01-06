@@ -11,8 +11,6 @@
         public static void Main(string[] args)
         {
             /// fix console, if the game is run on other engine
-            /// fix collision with self
-
             Console.CursorVisible = false;
             Console.BufferWidth = Console.WindowWidth = 50;
             Console.BufferHeight = Console.WindowHeight = 25;

@@ -26,8 +26,26 @@
 
         public void MainGame(double difficulty, double changeDifficulty, double worstDifficulty, bool isGameOver)
         {
+            // fix going up
+            /// Vector2 up = new Vector2(0, -1);
+            Vector2 down = new Vector2(0, 1);
+            Vector2 left = new Vector2(-1, 0);
+            Vector2 right = new Vector2(1, 0);
+
+            List<Vector2> possibleDirections = new List<Vector2>()
+            { 
+                down,
+                left,
+                right
+            };
+
+            Random random = new Random();
+
+            Vector2 selectedRandomDirection = possibleDirections[random.Next(0, possibleDirections.Count)];            
+
+            Vector2 direction = selectedRandomDirection;
+
             Apple apple = new Apple();
-            Vector2 direction = new Vector2(0, 1);
             Snake snake = new Snake();
             List<Rock> rocks = new List<Rock>();
 
