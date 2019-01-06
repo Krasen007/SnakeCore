@@ -1,7 +1,7 @@
 ﻿namespace SnakeCore.Objects
 {
-    using SnakeCore.Tools;
     using System;
+    using SnakeCore.Tools;
 
     public class Rock
     {

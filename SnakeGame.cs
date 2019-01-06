@@ -15,16 +15,17 @@
             double changeDifficulty = 1;
             double worstDifficulty = 50;
 
-            this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver);
-            this.GameOver();
+            this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver);            
         }
 
         private void GameOver()
         {
+            Console.Clear();
             Console.WriteLine("Thank you for playing!");
+            Console.ReadKey(true);
         }
 
-        public void MainGame(double difficulty, double changeDifficulty, double worstDifficulty, bool isGameOver)
+        private void MainGame(double difficulty, double changeDifficulty, double worstDifficulty, bool isGameOver)
         {
             // fix going up
             /// Vector2 up = new Vector2(0, -1);
@@ -80,6 +81,8 @@
                 apple.Delete();
                 snake.Delete();
             }
+
+            this.GameOver();
         }
 
         private void InputHandler(Vector2 direction)
