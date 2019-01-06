@@ -1,5 +1,6 @@
 ﻿namespace SnakeCore.Objects
 {
+    using SnakeCore.Tools;
     using System;
 
     public class Rock

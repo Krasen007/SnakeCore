@@ -1,5 +1,6 @@
-﻿namespace SnakeCore
+﻿namespace SnakeCore.Objects
 {
+    using SnakeCore.Tools;
     using System;
     using System.Collections.Generic;
 
@@ -7,14 +8,22 @@
     {
         public Snake()
         {
+            Random random = new Random();
+            
+            int startPosX = random.Next(Console.BufferWidth);
+
+            const int minSpawnDistance = 3;
+            int startPosY = random.Next(minSpawnDistance, Console.BufferHeight);
+
             this.SnakeElements = new List<Vector2>
                 {
-                // get random starting position
-                    new Vector2(10, 10),
-                    new Vector2(10, 9),
-                    new Vector2(10, 8),
-                    new Vector2(10, 7),
-                    new Vector2(10, 6),
+                // get random starting position -fixed ?
+                // get different starting lengths of snake
+                    new Vector2(startPosX, startPosY),
+                    new Vector2(startPosX, startPosY-1),
+                    new Vector2(startPosX, startPosY-2),
+                    new Vector2(startPosX, startPosY-3),
+                    new Vector2(startPosX, startPosY-4),
                 };
         }
 

@@ -1,4 +1,4 @@
-﻿namespace SnakeCore
+﻿namespace SnakeCore.Tools
 {
     public class Vector2
     {

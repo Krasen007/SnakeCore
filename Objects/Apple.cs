@@ -1,5 +1,6 @@
-﻿namespace SnakeCore
+﻿namespace SnakeCore.Objects
 {
+    using SnakeCore.Tools;
     using System;
 
     public class Apple
