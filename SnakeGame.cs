@@ -67,7 +67,8 @@
                 snakeController.Update(direction);
                 appleController.Update(snake, apple);
 
-                if (this.SnakeAppleCollision(snake, apple))
+                // fix with constant/difficlulty
+                if (this.SnakeAppleCollision(snake, apple) && snake.SnakeElements.Count >= 6) 
                 {
                     rocks.Add(new Rock());
                     rocks.Add(new Rock());
@@ -168,11 +169,14 @@
 
         private bool SnakeSelfCollision(Snake snake)
         {
-            for (int i = 1; i < snake.SnakeElements.Count; i++)
+            if (snake.SnakeElements.Count > 2)
             {
-                if (snake.SnakeElements[0].IsEqualTo(snake.SnakeElements[i]))
+                for (int i = 1; i < snake.SnakeElements.Count; i++)
                 {
-                    return true;
+                    if (snake.SnakeElements[0].IsEqualTo(snake.SnakeElements[i]))
+                    {
+                        return true;
+                    }
                 }
             }
 

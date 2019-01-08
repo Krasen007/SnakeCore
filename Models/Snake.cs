@@ -20,10 +20,10 @@
                 // get random starting position -fixed ?
                 // get different starting lengths of snake
                     new Vector2(startPosX, startPosY),
-                    new Vector2(startPosX, startPosY - 1),
-                    new Vector2(startPosX, startPosY - 2),
-                    new Vector2(startPosX, startPosY - 3),
-                    new Vector2(startPosX, startPosY - 4),
+                    ////new Vector2(startPosX, startPosY - 1),
+                    ////new Vector2(startPosX, startPosY - 2),
+                    ////new Vector2(startPosX, startPosY - 3),
+                    ////new Vector2(startPosX, startPosY - 4),
                 };
         }
 
