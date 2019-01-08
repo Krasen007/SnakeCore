@@ -21,18 +21,15 @@
             {
                 headSymbol = '>';
             }
-
-            if (direction.X == -1)
+            else if (direction.X == -1)
             {
                 headSymbol = '<';
             }
-
-            if (direction.Y == 1)
+            else if (direction.Y == 1)
             {
                 headSymbol = 'V';
             }
-
-            if (direction.Y == -1)
+            else if (direction.Y == -1)
             {
                 headSymbol = '^';
             }
@@ -49,11 +46,16 @@
 
         public void Delete()
         {
-            for (int i = 0; i < this.snake.SnakeElements.Count; i++)
-            {
-                Console.SetCursorPosition(this.snake.SnakeElements[i].X, this.snake.SnakeElements[i].Y);
-                Console.Write(" ");
-            }
+            ////for (int i = this.snake.SnakeElements.Count-4; i < this.snake.SnakeElements.Count; i++)
+            ////{
+            ////    Console.SetCursorPosition(this.snake.SnakeElements[i].X, this.snake.SnakeElements[i].Y);
+            ////    Console.Write(" ");
+            ////}
+
+            Console.SetCursorPosition(
+                this.snake.SnakeElements[this.snake.SnakeElements.Count - 1].X,
+                this.snake.SnakeElements[this.snake.SnakeElements.Count - 1].Y);
+            Console.Write(" ");
         }
     }
 }

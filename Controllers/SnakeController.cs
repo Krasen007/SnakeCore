@@ -15,7 +15,7 @@
 
         public void Update(Vector2 direction)
         {
-            // Move Snake
+            // Update snake * position
             for (int i = this.snake.SnakeElements.Count - 1; i > 0; i--)
             {
                 this.snake.SnakeElements[i].X = this.snake.SnakeElements[i - 1].X;
