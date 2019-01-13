@@ -9,13 +9,10 @@
 
     public class Game
     {
-        public Game()
+        public Game(double difficulty, double changeDifficulty, double worstDifficulty)
         {
             Console.Clear();
             bool isGameOver = false;
-            double difficulty = 150;
-            double changeDifficulty = 1;
-            double worstDifficulty = 50;
 
             this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver);
         }
@@ -23,9 +20,13 @@
         private void GameOver()
         {
             ///Console.Clear();
-            Console.WriteLine("Thank you for playing!");
+            const string ThankYou = "Thank you for playing!\n You will return to Main menu.";
+            Console.WriteLine(ThankYou);
             Console.ReadKey(true);
+            this.GoToMainMenu();
         }
+
+        private void GoToMainMenu() => new MainMenu(false);
 
         private void MainGame(double difficulty, double changeDifficulty, double worstDifficulty, bool isGameOver)
         {

@@ -27,8 +27,6 @@ namespace SnakeCore
             StartGame();
         }
 
-        private static void StartGame() => new MainMenu();
-
         /// <summary>
         /// Detects the current OS.
         /// </summary>
@@ -72,5 +70,7 @@ namespace SnakeCore
             Console.Write(AnyKeyStartText);
             Console.ReadKey(intercept: true);
         }
+
+        private static void StartGame() => new MainMenu(true);
     }
 }

@@ -1,24 +1,45 @@
 ﻿namespace SnakeCore.View
 {
     using System;
+    using SnakeCore.Tools;
 
     public class MainMenu
     {
-        public MainMenu()
+        private double difficulty;
+        private double changeDifficulty;
+        private double worstDifficulty;
+        private bool customGame;
+
+        public MainMenu(bool firstRun)
         {
-            this.DrawMainMenu();
+            this.DrawMainMenu(firstRun);
         }
 
-        private void DrawMainMenu()
+        private void DrawMainMenu(bool firstRun)
         {
             Console.Clear();
-            string menuText = "Main menu\n" +
-                "1: New game\n" +
+
+
+            if (firstRun)
+            {
+                string menuTextFirstRun = "Main menu\n" +
+                "1: New game with default settings\n" +
                 "2: Settings\n" +
                 "3: Exit\n\n" +
                 "Current settings: \n" +
                 "Enter number for selection: ";
-            Console.Write(menuText);
+                Console.Write(menuTextFirstRun);
+            }
+            else
+            {
+                string menuText = "Main menu\n" +
+                "1: New game with your settings\n" +
+                "2: Settings\n" +
+                "3: Exit\n\n" +
+                "Current settings: \n" +
+                "Enter number for selection: ";
+                Console.Write(menuText);
+            }
 
             string pickMenuItem = Console.ReadLine();
 
@@ -27,29 +48,33 @@
             const string Exit = "3";
             if (pickMenuItem.ToUpper() == NewGame)
             {
-                this.NewGameMenu();
+#pragma warning disable S3923 // All branches in a conditional structure should not have exactly the same implementation
+                if (firstRun)
+                {
+                    this.DefaultNewGame();
+                }
+                else
+                {
+                    // fix saved values
+                    ///this.SelectedCustomGame();
+                    this.DefaultNewGame();
+                }
+#pragma warning restore S3923 // All branches in a conditional structure should not have exactly the same implementation
             }
             else if (pickMenuItem.ToUpper() == Settings)
             {
-                ////this.customGame = true;
+                this.customGame = true;
                 this.SettingsMenu();
             }
             else if (pickMenuItem.ToUpper() == Exit)
             {
-                this.ShowExitString();
+                this.DrawGameExitThankYou();
             }
             else
             {
-                this.DrawMainMenu();
+                this.DrawMainMenu(firstRun);
             }
         }
-
-        private void NewGameMenu()
-        {
-            this.DefaultNewGame();
-        }
-
-        private void DefaultNewGame() => new Game();
 
         /// <summary>
         /// Lets the user select game mode.
@@ -69,32 +94,31 @@
 
             string pickDifficilty = Console.ReadLine();
 
-            if (true)
+            const string Easy = "1";
+            const string Medium = "2";
+            const string Hard = "3";
+            const string Exit = "4";
+            if (pickDifficilty.ToUpper() == Easy)
             {
-                const string Easy = "1";
-                const string Medium = "2";
-                const string Hard = "3";
-                const string Exit = "4";
-                if (pickDifficilty.ToUpper() == Easy)
-                {
-                    ////this.minLetterLength = 3;
-                }
-                else if (pickDifficilty.ToUpper() == Medium)
-                {
-                    ////this.minLetterLength = 4;
-                }
-                else if (pickDifficilty.ToUpper() == Hard)
-                {
-                    ////this.minLetterLength = 6;
-                }                
-                else if (pickDifficilty.ToUpper() == Exit)
-                {
-                    wantToExit = true;
-                }
-                else
-                {
-                    this.SettingsMenu();
-                }
+                this.difficulty = 150;
+                this.changeDifficulty = 1;
+                this.worstDifficulty = 120;
+            }
+            else if (pickDifficilty.ToUpper() == Medium)
+            {
+                this.difficulty = 120;
+                this.changeDifficulty = 1;
+                this.worstDifficulty = 70;
+            }
+            else if (pickDifficilty.ToUpper() == Hard)
+            {
+                this.difficulty = 100;
+                this.changeDifficulty = 1;
+                this.worstDifficulty = 45;
+            }
+            else if (pickDifficilty.ToUpper() == Exit)
+            {
+                wantToExit = true;
             }
             else
             {
@@ -103,18 +127,29 @@
 
             if (wantToExit)
             {
-                this.ShowExitString();
+                this.DrawGameExitThankYou();
             }
             else
             {
-                this.DrawMainMenu();
+                if (this.customGame)
+                {
+                    this.SelectedCustomGame();
+                }
+                else
+                {
+                    this.DefaultNewGame();
+                }
             }
         }
+
+        private void DefaultNewGame() => new Game(Constants.DefaultDifficulty, Constants.DefaultChangeDifficulty, Constants.DefaultWorstDifficulty);
+
+        private void SelectedCustomGame() => new Game(this.difficulty, this.changeDifficulty, this.worstDifficulty);
 
         /// <summary>
         /// Displays exit text.
         /// </summary>
-        private void ShowExitString()
+        private void DrawGameExitThankYou()
         {
             Console.Clear();
             const string ExitString = "Thank you for playing!\n\nPress any key to exit... ";
