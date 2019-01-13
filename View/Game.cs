@@ -1,4 +1,4 @@
-﻿namespace SnakeCore
+﻿namespace SnakeCore.View
 {
     using System;
     using System.Collections.Generic;
@@ -6,12 +6,12 @@
     using SnakeCore.Controllers;
     using SnakeCore.Models;
     using SnakeCore.Tools;
-    using SnakeCore.View;
 
-    public class SnakeGame
+    public class Game
     {
-        public SnakeGame()
+        public Game()
         {
+            Console.Clear();
             bool isGameOver = false;
             double difficulty = 150;
             double changeDifficulty = 1;
@@ -67,12 +67,12 @@
                 {
                     isGameOver = true;
                 }
-                
+
                 snakeController.Update(direction);
                 appleController.Update(snake, apple);
 
                 // fix with constant/difficlulty
-                if (this.SnakeAppleCollision(snake, apple) && snake.SnakeElements.Count >= 6) 
+                if (this.SnakeAppleCollision(snake, apple) && snake.SnakeElements.Count >= 6)
                 {
                     rocks.Add(new Rock());
                     rocks.Add(new Rock());
@@ -139,6 +139,7 @@
                     ///Console.WriteLine("Click the X button");
                     return true;
                 }
+
                 /// fix other key combinations
             }
 

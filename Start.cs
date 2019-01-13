@@ -1,25 +1,76 @@
-﻿namespace SnakeCore
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+namespace SnakeCore
 {
     using System;
+    using SnakeCore.Tools;
+    using SnakeCore.View;
 
     public class Start
     {
         protected Start()
         {
         }
-        
-        public static void Main(string[] args)
-        {
-            /// fix console, if the game is run on other engine
-            Console.CursorVisible = false;
-            Console.BufferWidth = Console.WindowWidth = 50;
-            Console.BufferHeight = Console.WindowHeight = 25;
 
-            Console.WriteLine("Hello World!");
+        public static void Main()
+        {
             Console.Clear();
-#pragma warning disable S1848 // Objects should not be created to be dropped immediately without being used
-            new SnakeGame();
-#pragma warning restore S1848 // Objects should not be created to be dropped immediately without being used
+            Console.CursorVisible = false;
+            Console.BufferWidth = Console.WindowWidth = Constants.GameWidth;
+            Console.BufferHeight = Console.WindowHeight = Constants.GameHeight;
+
+            DefineOs();
+            PressAnyKey();
+            StartGame();
+        }
+
+        private static void StartGame() => new MainMenu();
+
+        /// <summary>
+        /// Detects the current OS.
+        /// </summary>
+        private static void DefineOs()
+        {
+            OperatingSystem os = Environment.OSVersion;
+            PlatformID pid = os.Platform;
+            switch (pid)
+            {
+                case PlatformID.Win32NT:
+                case PlatformID.Win32S:
+                case PlatformID.Win32Windows:
+                case PlatformID.WinCE:
+                    {
+                        const string WelcomeWindows = "Welcome to " + Constants.GameName + " for Windows.";
+                        Console.WriteLine(WelcomeWindows);
+                        break;
+                    }
+
+                case PlatformID.Unix:
+                    const string WelcomeLinux = "Welcome to " + Constants.GameName + " for Linux.";
+                    Console.WriteLine(WelcomeLinux);
+                    break;
+                case PlatformID.MacOSX:
+                    const string WelcomeMac = "Welcome to " + Constants.GameName + " for Mac.";
+                    Console.WriteLine(WelcomeMac);
+                    break;
+                default:
+                    const string WelcomeAnyOS = "Welcome to " + Constants.GameName + "!";
+                    Console.WriteLine(WelcomeAnyOS);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Asks for user keypress.
+        /// </summary>
+        private static void PressAnyKey()
+        {
+            const string AnyKeyStartText = "\nPress any key to start... ";
+            Console.Write(AnyKeyStartText);
+            Console.ReadKey(intercept: true);
         }
     }
 }
