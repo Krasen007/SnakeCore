@@ -22,7 +22,7 @@
 
         private void GameOver()
         {
-            Console.Clear();
+            ///Console.Clear();
             Console.WriteLine("Thank you for playing!");
             Console.ReadKey(true);
         }
@@ -63,7 +63,11 @@
 
             while (!isGameOver)
             {
-                this.InputHandler(direction);
+                if (this.InputHandler(direction))
+                {
+                    isGameOver = true;
+                }
+                
                 snakeController.Update(direction);
                 appleController.Update(snake, apple);
 
@@ -105,7 +109,7 @@
             this.GameOver();
         }
 
-        private void InputHandler(Vector2 direction)
+        private bool InputHandler(Vector2 direction)
         {
             if (Console.KeyAvailable)
             {
@@ -132,9 +136,13 @@
                 }
                 else if (userInput.Key == ConsoleKey.Escape)
                 {
-                    Console.WriteLine("Click the X button");
+                    ///Console.WriteLine("Click the X button");
+                    return true;
                 }
+                /// fix other key combinations
             }
+
+            return false;
         }
 
         private bool SnakeAppleCollision(Snake snake, Apple apple)
