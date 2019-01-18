@@ -14,6 +14,21 @@
 
         public MainMenu(bool firstRun)
         {
+            this.difficulty = Constants.DefaultDifficulty;
+            this.changeDifficulty = Constants.DefaultChangeDifficulty;
+            this.worstDifficulty = Constants.DefaultWorstDifficulty;
+            this.appleSpawnTime = Constants.DefaultAppleSpawnTime;
+            this.rocksEnabled = Constants.DefaultRocksEnabled;
+            this.DrawMainMenu(firstRun);
+        }
+
+        public MainMenu(bool firstRun, double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled)
+        {
+            this.difficulty = difficulty;
+            this.changeDifficulty = changeDifficulty;
+            this.worstDifficulty = worstDifficulty;
+            this.appleSpawnTime = appleSpawnTime;
+            this.rocksEnabled = rocksEnabled;
             this.DrawMainMenu(firstRun);
         }
 
@@ -21,26 +36,16 @@
         {
             Console.Clear();
 
-            if (firstRun)
-            {
-                string menuTextFirstRun = "Main menu\n" +
-                "1: New game with default settings\n" +
-                "2: Settings\n" +
-                "3: Exit\n\n" +
-                "Current settings: \n" +
-                "Enter number for selection: ";
-                Console.Write(menuTextFirstRun);
-            }
-            else
-            {
-                string menuText = "Main menu\n" +
-                "1: New game with your settings\n" +
-                "2: Settings\n" +
-                "3: Exit\n\n" +
-                "Current settings: \n" +
-                "Enter number for selection: ";
-                Console.Write(menuText);
-            }
+            string menuText = "Main menu\n" +
+                            "1: New game\n" +
+                            "2: Settings\n" +
+                            "3: Exit\n\n" +
+                            "Current settings: \n" +
+                            "Difficulty: {0}, Diff Change: {1},\n" +
+                            "Worst Diff: {2}, Apple Spawn Time: {3},\n" +
+                            "Rocks Enabled: {4} \n" +
+                            "Enter number for selection: ";
+            Console.Write(menuText, this.difficulty, this.changeDifficulty, this.worstDifficulty, this.appleSpawnTime, this.rocksEnabled);
 
             string pickMenuItem = Console.ReadLine();
 
@@ -87,7 +92,7 @@
                 "1: Easy\n" +
                 "2: Medium\n" +
                 "3: Hard\n" +
-                "4: Disable rocks?\n" +
+                "4: Enable/Disable rocks?\n" +
                 "5: Exit game\n" +
                 "Enter number for selection: ";
             Console.Write(SelectDifficulty);
@@ -123,7 +128,7 @@
             }
             else if (pickDifficilty.ToUpper() == DisableRocks)
             {
-                this.rocksEnabled = false;
+                this.rocksEnabled = !this.rocksEnabled;
             }
             else if (pickDifficilty.ToUpper() == Exit)
             {
@@ -142,7 +147,7 @@
             {
                 if (this.customGame)
                 {
-                    this.SelectedCustomGame();
+                    this.DrawMainMenu(false);
                 }
                 else
                 {

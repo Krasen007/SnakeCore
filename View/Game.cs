@@ -17,16 +17,16 @@
             this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver, appleSpawnTime, rocksEnabled);
         }
 
-        private void GameOver()
+        private void GameOver(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled)
         {
             ///Console.Clear();
             const string ThankYou = "Thank you for playing!\n You will return to Main menu.";
             Console.WriteLine(ThankYou);
             Console.ReadKey(true);
-            this.GoToMainMenu();
+#pragma warning disable S1848 // Objects should not be created to be dropped immediately without being used
+            new MainMenu(false, difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
+#pragma warning restore S1848 // Objects should not be created to be dropped immediately without being used
         }
-
-        private void GoToMainMenu() => new MainMenu(false);
 
         private void MainGame(double difficulty, double changeDifficulty, double worstDifficulty, bool isGameOver, int appleSpawnTime, bool rocksEnabled)
         {
@@ -107,7 +107,7 @@
                 snakeView.Delete();
             }
 
-            this.GameOver();
+            this.GameOver(difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
         }
 
         private bool InputHandler(Vector2 direction)

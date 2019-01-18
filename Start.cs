@@ -71,6 +71,6 @@ namespace SnakeCore
             Console.ReadKey(intercept: true);
         }
 
-        private static void StartGame() => new MainMenu(true);
+        private static void StartGame() => new MainMenu(firstRun: true);
     }
 }
