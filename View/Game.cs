@@ -9,12 +9,12 @@
 
     public class Game
     {
-        public Game(double difficulty, double changeDifficulty, double worstDifficulty)
+        public Game(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled)
         {
             Console.Clear();
             bool isGameOver = false;
 
-            this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver);
+            this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver, appleSpawnTime, rocksEnabled);
         }
 
         private void GameOver()
@@ -28,7 +28,7 @@
 
         private void GoToMainMenu() => new MainMenu(false);
 
-        private void MainGame(double difficulty, double changeDifficulty, double worstDifficulty, bool isGameOver)
+        private void MainGame(double difficulty, double changeDifficulty, double worstDifficulty, bool isGameOver, int appleSpawnTime, bool rocksEnabled)
         {
             // fix going up
             /// Vector2 up = new Vector2(0, -1);
@@ -55,7 +55,7 @@
             Snake snake = new Snake();
             SnakeView snakeView = new SnakeView(snake);
 
-            AppleController appleController = new AppleController();
+            AppleController appleController = new AppleController(appleSpawnTime);
             SnakeController snakeController = new SnakeController(snake);
             RockController rockController = new RockController();
 
@@ -73,7 +73,7 @@
                 appleController.Update(snake, apple);
 
                 // fix with constant/difficlulty
-                if (this.SnakeAppleCollision(snake, apple) && snake.SnakeElements.Count >= 6)
+                if (this.SnakeAppleCollision(snake, apple) && snake.SnakeElements.Count >= 6 && rocksEnabled)
                 {
                     rocks.Add(new Rock());
                     rocks.Add(new Rock());

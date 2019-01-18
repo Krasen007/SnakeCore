@@ -8,6 +8,8 @@
         private double difficulty;
         private double changeDifficulty;
         private double worstDifficulty;
+        private int appleSpawnTime;
+        private bool rocksEnabled;
         private bool customGame;
 
         public MainMenu(bool firstRun)
@@ -18,7 +20,6 @@
         private void DrawMainMenu(bool firstRun)
         {
             Console.Clear();
-
 
             if (firstRun)
             {
@@ -48,7 +49,6 @@
             const string Exit = "3";
             if (pickMenuItem.ToUpper() == NewGame)
             {
-#pragma warning disable S3923 // All branches in a conditional structure should not have exactly the same implementation
                 if (firstRun)
                 {
                     this.DefaultNewGame();
@@ -56,10 +56,9 @@
                 else
                 {
                     // fix saved values
-                    ///this.SelectedCustomGame();
-                    this.DefaultNewGame();
+                    this.SelectedCustomGame();
+                    ///this.DefaultNewGame();
                 }
-#pragma warning restore S3923 // All branches in a conditional structure should not have exactly the same implementation
             }
             else if (pickMenuItem.ToUpper() == Settings)
             {
@@ -88,7 +87,8 @@
                 "1: Easy\n" +
                 "2: Medium\n" +
                 "3: Hard\n" +
-                "4: Exit game\n" +
+                "4: Disable rocks?\n" +
+                "5: Exit game\n" +
                 "Enter number for selection: ";
             Console.Write(SelectDifficulty);
 
@@ -97,24 +97,33 @@
             const string Easy = "1";
             const string Medium = "2";
             const string Hard = "3";
+            const string DisableRocks = "4";
             const string Exit = "4";
+
             if (pickDifficilty.ToUpper() == Easy)
             {
                 this.difficulty = 150;
                 this.changeDifficulty = 1;
                 this.worstDifficulty = 120;
+                this.appleSpawnTime = 6000;
             }
             else if (pickDifficilty.ToUpper() == Medium)
             {
                 this.difficulty = 120;
                 this.changeDifficulty = 1;
                 this.worstDifficulty = 70;
+                this.appleSpawnTime = 3000;
             }
             else if (pickDifficilty.ToUpper() == Hard)
             {
                 this.difficulty = 100;
                 this.changeDifficulty = 1;
                 this.worstDifficulty = 45;
+                this.appleSpawnTime = 1800;
+            }
+            else if (pickDifficilty.ToUpper() == DisableRocks)
+            {
+                this.rocksEnabled = false;
             }
             else if (pickDifficilty.ToUpper() == Exit)
             {
@@ -142,9 +151,9 @@
             }
         }
 
-        private void DefaultNewGame() => new Game(Constants.DefaultDifficulty, Constants.DefaultChangeDifficulty, Constants.DefaultWorstDifficulty);
+        private void DefaultNewGame() => new Game(Constants.DefaultDifficulty, Constants.DefaultChangeDifficulty, Constants.DefaultWorstDifficulty, Constants.DefaultAppleSpawnTime, Constants.DefaultRocksEnabled);
 
-        private void SelectedCustomGame() => new Game(this.difficulty, this.changeDifficulty, this.worstDifficulty);
+        private void SelectedCustomGame() => new Game(this.difficulty, this.changeDifficulty, this.worstDifficulty, this.appleSpawnTime, this.rocksEnabled);
 
         /// <summary>
         /// Displays exit text.

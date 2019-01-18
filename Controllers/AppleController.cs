@@ -9,21 +9,19 @@
         private readonly Random rng;
         private int timeSinceLastSpawn;
 
-        public AppleController()
+        public AppleController(int appleSpawnTime)
         {
             this.rng = new Random();
 
-            // For proper Timer:
             this.timeSinceLastSpawn = Environment.TickCount;
-            this.spawnTimer = 3000; // -> 5 seconds delay between apple spawns
+            this.spawnTimer = appleSpawnTime;
         }
 
         public void Update(Snake snake, Apple apple)
         {
-            // For proper Timer:
             if (this.timeSinceLastSpawn + this.spawnTimer < Environment.TickCount)
             {
-                this.timeSinceLastSpawn = Environment.TickCount; // -> resets the timer
+                this.timeSinceLastSpawn = Environment.TickCount;
                 this.Generate(snake, apple);
             }
         }
