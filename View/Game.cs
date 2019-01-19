@@ -19,17 +19,23 @@
 
         private void GameOver(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled)
         {
-            ///Console.Clear();
-            const string ThankYou = "Thank you for playing!\n You will return to Main menu.";
+            Console.SetCursorPosition(0, 0);
+            const string ThankYou = "Game Over!\nYou will return to Main menu.\nPress any key...";
             Console.WriteLine(ThankYou);
             Console.ReadKey(true);
-#pragma warning disable S1848 // Objects should not be created to be dropped immediately without being used
-            new MainMenu(false, difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
-#pragma warning restore S1848 // Objects should not be created to be dropped immediately without being used
+            this.ReturnToMainMenu(difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
         }
+
+        private void ReturnToMainMenu(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled) => new MainMenu(false, difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
 
         private void MainGame(double difficulty, double changeDifficulty, double worstDifficulty, bool isGameOver, int appleSpawnTime, bool rocksEnabled)
         {
+            double startDiff = difficulty;
+            double startChangeDiff = changeDifficulty;
+            double startWorstDiff = worstDifficulty;
+            int startAppleSpawnTime = appleSpawnTime;
+            bool startRocksEnabled = rocksEnabled;
+
             // fix going up
             /// Vector2 up = new Vector2(0, -1);
             Vector2 down = new Vector2(0, 1);
@@ -72,8 +78,7 @@
                 snakeController.Update(direction);
                 appleController.Update(snake, apple);
 
-                // fix with constant/difficlulty
-                if (this.SnakeAppleCollision(snake, apple) && snake.SnakeElements.Count >= 6 && rocksEnabled)
+                if (this.SnakeAppleCollision(snake, apple) && snake.SnakeElements.Count >= Constants.DefaultSnakeLengthRockSpawn && rocksEnabled)
                 {
                     rocks.Add(new Rock());
                     rocks.Add(new Rock());
@@ -107,14 +112,14 @@
                 snakeView.Delete();
             }
 
-            this.GameOver(difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
+            this.GameOver(startDiff, startChangeDiff, startWorstDiff, startAppleSpawnTime, startRocksEnabled);
         }
 
         private bool InputHandler(Vector2 direction)
         {
             if (Console.KeyAvailable)
             {
-                ConsoleKeyInfo userInput = Console.ReadKey();
+                ConsoleKeyInfo userInput = Console.ReadKey(true);
                 if (userInput.Key == ConsoleKey.RightArrow && direction.X != -1)
                 {
                     direction.X = 1;
@@ -137,11 +142,8 @@
                 }
                 else if (userInput.Key == ConsoleKey.Escape)
                 {
-                    ///Console.WriteLine("Click the X button");
                     return true;
-                }
-
-                /// fix other key combinations
+                } 
             }
 
             return false;

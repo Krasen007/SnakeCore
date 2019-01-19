@@ -10,8 +10,7 @@
         internal const double DefaultWorstDifficulty = 50;
         internal const int DefaultAppleSpawnTime = 3000;
         internal const bool DefaultRocksEnabled = true;
-
-
+        internal const int DefaultSnakeLengthRockSpawn = 6;
 
         protected Constants()
         {
