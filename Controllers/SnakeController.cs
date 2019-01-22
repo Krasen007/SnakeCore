@@ -1,4 +1,9 @@
-﻿namespace SnakeCore.Controllers
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+namespace SnakeCore.Controllers
 {
     using System;
     using SnakeCore.Models;
@@ -15,7 +20,7 @@
 
         public void Update(Vector2 direction)
         {
-            // Update snake * position
+            // Update snake "*" body position
             for (int i = this.snake.SnakeElements.Count - 1; i > 0; i--)
             {
                 this.snake.SnakeElements[i].X = this.snake.SnakeElements[i - 1].X;

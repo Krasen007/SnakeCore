@@ -1,4 +1,9 @@
-﻿namespace SnakeCore.Models
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+namespace SnakeCore.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +22,6 @@
 
             this.SnakeElements = new List<Vector2>
                 {
-                // get random starting position -fixed ?
                 // get different starting lengths of snake
                     new Vector2(startPosX, startPosY),
                     ////new Vector2(startPosX, startPosY - 1),

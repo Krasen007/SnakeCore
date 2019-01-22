@@ -1,4 +1,9 @@
-﻿namespace SnakeCore.View
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+namespace SnakeCore.View
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +14,9 @@
 
     public class Game
     {
+        /// <summary>
+        /// Starts new game.
+        /// </summary>
         public Game(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled)
         {
             Console.Clear();
@@ -17,17 +25,9 @@
             this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver, appleSpawnTime, rocksEnabled);
         }
 
-        private void GameOver(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled)
-        {
-            Console.SetCursorPosition(0, 0);
-            const string ThankYou = "Game Over!\nYou will return to Main menu.\nPress any key...";
-            Console.WriteLine(ThankYou);
-            Console.ReadKey(true);
-            this.ReturnToMainMenu(difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
-        }
-
-        private void ReturnToMainMenu(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled) => new MainMenu(false, difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
-
+        /// <summary>
+        /// Main Game Loop.
+        /// </summary>
         private void MainGame(double difficulty, double changeDifficulty, double worstDifficulty, bool isGameOver, int appleSpawnTime, bool rocksEnabled)
         {
             double startDiff = difficulty;
@@ -36,7 +36,8 @@
             int startAppleSpawnTime = appleSpawnTime;
             bool startRocksEnabled = rocksEnabled;
 
-            // fix going up
+            // Add directions for random starting direction of snake.
+            // fix starting in up
             /// Vector2 up = new Vector2(0, -1);
             Vector2 down = new Vector2(0, 1);
             Vector2 left = new Vector2(-1, 0);
@@ -115,6 +116,17 @@
             this.GameOver(startDiff, startChangeDiff, startWorstDiff, startAppleSpawnTime, startRocksEnabled);
         }
 
+        private void GameOver(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled)
+        {
+            Console.SetCursorPosition(0, 0);
+            const string GameOver = "Game Over!\nYou will return to Main menu.\nPress any key...";
+            Console.WriteLine(GameOver);
+            Console.ReadKey(true);
+            this.ReturnToMainMenu(difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
+        }
+
+        private void ReturnToMainMenu(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled) => new MainMenu(false, difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
+                
         private bool InputHandler(Vector2 direction)
         {
             if (Console.KeyAvailable)

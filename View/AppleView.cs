@@ -1,4 +1,9 @@
-﻿namespace SnakeCore.View
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+namespace SnakeCore.View
 {
     using System;
     using SnakeCore.Models;
@@ -15,7 +20,8 @@
             {
                 Console.SetCursorPosition(apple.Position.X, apple.Position.Y);
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("@");
+                const string AppleSymbol = "@";
+                Console.Write(AppleSymbol);
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
@@ -25,7 +31,8 @@
             if (apple.IsActive)
             {
                 Console.SetCursorPosition(apple.Position.X, apple.Position.Y);
-                Console.Write(" ");
+                const string EmptyString = " ";
+                Console.Write(EmptyString);
             }
         }
     }

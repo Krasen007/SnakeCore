@@ -1,8 +1,12 @@
-﻿namespace SnakeCore.Controllers
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+namespace SnakeCore.Controllers
 {
     using System;
     using SnakeCore.Models;
-    using SnakeCore.Tools;
 
     public class RockController
     {

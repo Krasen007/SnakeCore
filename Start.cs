@@ -17,14 +17,21 @@ namespace SnakeCore
 
         public static void Main()
         {
+            Initialize();
+            DefineOs();
+            PressAnyKeyToStart();
+            StartGame();
+        }
+
+        /// <summary>
+        /// Sets initialization of Console window for the game.
+        /// </summary>
+        private static void Initialize()
+        {
             Console.Clear();
             Console.CursorVisible = false;
             Console.BufferWidth = Console.WindowWidth = Constants.GameWidth;
             Console.BufferHeight = Console.WindowHeight = Constants.GameHeight;
-
-            DefineOs();
-            PressAnyKey();
-            StartGame();
         }
 
         /// <summary>
@@ -33,8 +40,8 @@ namespace SnakeCore
         private static void DefineOs()
         {
             OperatingSystem os = Environment.OSVersion;
-            PlatformID pid = os.Platform;
-            switch (pid)
+            PlatformID platformId = os.Platform;
+            switch (platformId)
             {
                 case PlatformID.Win32NT:
                 case PlatformID.Win32S:
@@ -47,24 +54,32 @@ namespace SnakeCore
                     }
 
                 case PlatformID.Unix:
-                    const string WelcomeLinux = "Welcome to " + Constants.GameName + " for Linux.";
-                    Console.WriteLine(WelcomeLinux);
-                    break;
+                    {
+                        const string WelcomeLinux = "Welcome to " + Constants.GameName + " for Linux.";
+                        Console.WriteLine(WelcomeLinux);
+                        break;
+                    }
+
                 case PlatformID.MacOSX:
-                    const string WelcomeMac = "Welcome to " + Constants.GameName + " for Mac.";
-                    Console.WriteLine(WelcomeMac);
-                    break;
+                    {
+                        const string WelcomeMac = "Welcome to " + Constants.GameName + " for Mac.";
+                        Console.WriteLine(WelcomeMac);
+                        break;
+                    }
+
                 default:
-                    const string WelcomeAnyOS = "Welcome to " + Constants.GameName + "!";
-                    Console.WriteLine(WelcomeAnyOS);
-                    break;
+                    {
+                        const string WelcomeAnyOS = "Welcome to " + Constants.GameName + "!";
+                        Console.WriteLine(WelcomeAnyOS);
+                        break;
+                    }
             }
         }
 
         /// <summary>
-        /// Asks for user keypress.
+        /// Asks for user keypress for start of game.
         /// </summary>
-        private static void PressAnyKey()
+        private static void PressAnyKeyToStart()
         {
             const string AnyKeyStartText = "\nPress any key to start... ";
             Console.Write(AnyKeyStartText);

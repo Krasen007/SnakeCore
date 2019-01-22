@@ -1,4 +1,9 @@
-﻿namespace SnakeCore.View
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+namespace SnakeCore.View
 {
     using System;
     using SnakeCore.Tools;
@@ -11,6 +16,10 @@
         private int appleSpawnTime;
         private bool rocksEnabled;
 
+        /// <summary>
+        /// Displays main menu of the game.
+        /// </summary>
+        /// <param name="firstRun">Given for first startup of the game</param>
         public MainMenu(bool firstRun)
         {
             this.difficulty = Constants.DefaultDifficulty;
@@ -18,6 +27,7 @@
             this.worstDifficulty = Constants.DefaultWorstDifficulty;
             this.appleSpawnTime = Constants.DefaultAppleSpawnTime;
             this.rocksEnabled = Constants.DefaultRocksEnabled;
+
             this.DrawMainMenu(firstRun);
         }
 
@@ -28,9 +38,13 @@
             this.worstDifficulty = worstDifficulty;
             this.appleSpawnTime = appleSpawnTime;
             this.rocksEnabled = rocksEnabled;
+
             this.DrawMainMenu(firstRun);
         }
 
+        /// <summary>
+        /// Draws the UI of the main menu and displays current settings.
+        /// </summary>
         private void DrawMainMenu(bool firstRun)
         {
             Console.Clear();
@@ -113,14 +127,14 @@
                 this.difficulty = 120;
                 this.changeDifficulty = 1;
                 this.worstDifficulty = 70;
-                this.appleSpawnTime = 3000;
+                this.appleSpawnTime = 3500;
             }
             else if (pickDifficilty.ToUpper() == Hard)
             {
                 this.difficulty = 100;
-                this.changeDifficulty = 1;
+                this.changeDifficulty = 2;
                 this.worstDifficulty = 45;
-                this.appleSpawnTime = 1800;
+                this.appleSpawnTime = 1900;
             }
             else if (pickDifficilty.ToUpper() == DisableRocks)
             {
@@ -145,8 +159,14 @@
             }
         }
 
+        /// <summary>
+        /// Starts new game with default settings.
+        /// </summary>
         private void DefaultNewGame() => new Game(Constants.DefaultDifficulty, Constants.DefaultChangeDifficulty, Constants.DefaultWorstDifficulty, Constants.DefaultAppleSpawnTime, Constants.DefaultRocksEnabled);
-
+        
+        /// <summary>
+        /// Starts new game with user selected settings.
+        /// </summary>
         private void SelectedCustomGame() => new Game(this.difficulty, this.changeDifficulty, this.worstDifficulty, this.appleSpawnTime, this.rocksEnabled);
 
         /// <summary>

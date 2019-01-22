@@ -1,4 +1,9 @@
-﻿namespace SnakeCore.Tools
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+ 
+ namespace SnakeCore.Tools
 {
     public class Constants
     {

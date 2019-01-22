@@ -1,4 +1,9 @@
-﻿namespace SnakeCore.View
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+ 
+ namespace SnakeCore.View
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +24,8 @@
             {
                 Console.SetCursorPosition(rock.Position.X, rock.Position.Y);
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.Write("X");
+                const string RockString = "X";
+                Console.Write(RockString);
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }

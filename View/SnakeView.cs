@@ -1,4 +1,9 @@
-﻿namespace SnakeCore.View
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Krasen Ivanov. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+namespace SnakeCore.View
 {
     using System;
     using SnakeCore.Models;
@@ -15,7 +20,6 @@
 
         public void Draw(Vector2 direction)
         {
-            // Case right
             char headSymbol = ' ';
             if (direction.X == 1)
             {
@@ -57,7 +61,8 @@
                     else
                     {
                         Console.SetCursorPosition(this.snake.SnakeElements[i].X, this.snake.SnakeElements[i].Y);
-                        Console.Write("*");
+                        const string BodyString = "*";
+                        Console.Write(BodyString);
                     }
                 }
             }
