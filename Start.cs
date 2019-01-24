@@ -11,6 +11,11 @@ namespace SnakeCore
 
     public class Start
     {
+        private static int currentBufferWidth;
+        private static int currentBufferHeight;
+        private static int currentWindowWidth;
+        private static int currentWindowHeight;
+
         protected Start()
         {
         }
@@ -21,13 +26,20 @@ namespace SnakeCore
             DefineOs();
             PressAnyKeyToStart();
             StartGame();
-        }
+            RestoreWindowInit();
+        }        
 
         /// <summary>
         /// Sets initialization of Console window for the game.
         /// </summary>
         private static void Initialize()
         {
+            currentBufferWidth = Console.BufferWidth;
+            currentBufferHeight = Console.BufferHeight;
+
+            currentWindowWidth = Console.WindowWidth;
+            currentWindowHeight = Console.WindowHeight;
+
             Console.Clear();
             Console.CursorVisible = false;
             Console.BufferWidth = Console.WindowWidth = Constants.GameWidth;
@@ -86,6 +98,20 @@ namespace SnakeCore
             Console.ReadKey(intercept: true);
         }
 
+        /// <summary>
+        /// Starts a main menu instance.
+        /// </summary>
         private static void StartGame() => new MainMenu(firstRun: true);
+
+        /// <summary>
+        /// Restores the settings for the console.
+        /// </summary>
+        private static void RestoreWindowInit()
+        {
+            Console.BufferWidth = currentBufferWidth;
+            Console.BufferHeight = currentBufferHeight;
+            Console.WindowWidth = currentWindowWidth;
+            Console.WindowHeight = currentWindowHeight;
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace SnakeCore.Controllers
                 this.snake.SnakeElements[i].Y = this.snake.SnakeElements[i - 1].Y;
             }
 
-            this.snake.SnakeElements[0].Add(direction);
+            this.snake.SnakeElements[0].Move(direction);
 
             // Teleport snake
             if (this.snake.SnakeElements[0].X == Console.BufferWidth)

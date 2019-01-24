@@ -36,7 +36,7 @@ namespace SnakeCore.View
             int startAppleSpawnTime = appleSpawnTime;
             bool startRocksEnabled = rocksEnabled;
 
-            // Add directions for random starting direction of snake.
+            // Adds directions for random starting direction of snake.
             // fix starting in up
             /// Vector2 up = new Vector2(0, -1);
             Vector2 down = new Vector2(0, 1);
@@ -69,6 +69,7 @@ namespace SnakeCore.View
             List<Rock> rocks = new List<Rock>();
             RockView rockView = new RockView(rocks);
 
+            // Main Loop
             while (!isGameOver)
             {
                 if (this.InputHandler(direction))
@@ -116,6 +117,9 @@ namespace SnakeCore.View
             this.GameOver(startDiff, startChangeDiff, startWorstDiff, startAppleSpawnTime, startRocksEnabled);
         }
 
+        /// <summary>
+        /// Displays game over text after crash of snake.
+        /// </summary>
         private void GameOver(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled)
         {
             Console.SetCursorPosition(0, 0);
@@ -125,8 +129,16 @@ namespace SnakeCore.View
             this.ReturnToMainMenu(difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
         }
 
+        /// <summary>
+        /// Returns the player to main menu.
+        /// </summary>
         private void ReturnToMainMenu(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled) => new MainMenu(false, difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
                 
+        /// <summary>
+        /// Handles key input.
+        /// </summary>
+        /// <param name="direction">Current direction of snake.</param>
+        /// <returns>Returns true if you want to exit the game.</returns>
         private bool InputHandler(Vector2 direction)
         {
             if (Console.KeyAvailable)
@@ -161,6 +173,9 @@ namespace SnakeCore.View
             return false;
         }
 
+        /// <summary>
+        /// Checks for collision between snake and apple
+        /// </summary>
         private bool SnakeAppleCollision(Snake snake, Apple apple)
         {
             if (apple.IsActive && snake.SnakeElements[0].IsEqualTo(apple.Position))
@@ -178,6 +193,9 @@ namespace SnakeCore.View
             }
         }
 
+        /// <summary>
+        /// Checks for collision between snake and rock
+        /// </summary>
         private bool SnakeRocksCollision(Snake snake, List<Rock> rocks)
         {
             foreach (var rock in rocks)
@@ -191,6 +209,9 @@ namespace SnakeCore.View
             return false;
         }
 
+        /// <summary>
+        /// Checks for collision between snake and itself
+        /// </summary>
         private bool SnakeSelfCollision(Snake snake)
         {
             if (snake.SnakeElements.Count > 2)

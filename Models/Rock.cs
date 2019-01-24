@@ -14,6 +14,6 @@ namespace SnakeCore.Models
             this.Position = new Vector2(0, 0);
         }
 
-        public Vector2 Position { get; set; }        
+        public Vector2 Position { get; }        
     }
 }

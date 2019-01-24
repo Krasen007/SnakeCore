@@ -17,15 +17,15 @@ namespace SnakeCore.Tools
 
         public int Y { get; set; }
 
-        public void Add(Vector2 newCoords)
+        public void Move(Vector2 position)
         {
-            this.X += newCoords.X;
-            this.Y += newCoords.Y;
+            this.X += position.X;
+            this.Y += position.Y;
         }
 
-        public bool IsEqualTo(Vector2 newCoords)
+        public bool IsEqualTo(Vector2 position)
         {
-            return this.X == newCoords.X && this.Y == newCoords.Y;
+            return this.X == position.X && this.Y == position.Y;
         }
     }
 }

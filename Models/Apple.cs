@@ -15,7 +15,7 @@ namespace SnakeCore.Models
             this.IsActive = false;
         }
 
-        public Vector2 Position { get; set; }
+        public Vector2 Position { get; }
 
         public bool IsActive { get; set; }            
     }
