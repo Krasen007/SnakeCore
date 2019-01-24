@@ -15,10 +15,10 @@ namespace SnakeCore.Models
         {
             Random random = new Random();
 
-            int startPosX = random.Next(Console.BufferWidth);
+            int startPosX = random.Next(Constants.GameWidth);
 
             const int MinSpawnDistance = 3;
-            int startPosY = random.Next(MinSpawnDistance, Console.BufferHeight);
+            int startPosY = random.Next(MinSpawnDistance, Constants.GameHeight);
 
             this.SnakeElements = new List<Vector2>
                 {

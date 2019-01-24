@@ -7,22 +7,23 @@ namespace SnakeCore.Controllers
 {
     using System;
     using SnakeCore.Models;
+    using SnakeCore.Tools;
 
     public class RockController
     {
-        private readonly Random rng;
+        private readonly Random random;
 
         public RockController()
         {
-            this.rng = new Random();
+            this.random = new Random();
         }
 
-        public void Generate(Snake snake, Rock rock)
+        public void SpawnRocks(Snake snake, Rock rock)
         {                        
             do
             {
-                rock.Position.X = this.rng.Next(0, Console.BufferWidth);
-                rock.Position.Y = this.rng.Next(0, Console.BufferHeight);
+                rock.Position.X = this.random.Next(0, Constants.GameWidth);
+                rock.Position.Y = this.random.Next(0, Constants.GameHeight);
             }
             while (this.CollidesWithElements(snake, rock));
         }

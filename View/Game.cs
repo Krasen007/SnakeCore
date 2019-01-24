@@ -7,6 +7,7 @@ namespace SnakeCore.View
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using SnakeCore.Controllers;
     using SnakeCore.Models;
@@ -14,6 +15,8 @@ namespace SnakeCore.View
 
     public class Game
     {
+        private readonly Dictionary<int, string> scoreboard;
+
         /// <summary>
         /// Starts new game.
         /// </summary>
@@ -21,6 +24,13 @@ namespace SnakeCore.View
         {
             Console.Clear();
             bool isGameOver = false;
+
+            // fix this to be given before start of new game
+            this.scoreboard = new Dictionary<int, string>();
+            for (int i = 1; i < 10; i++)
+            {
+                scoreboard[i] = "AAA";
+            }
 
             this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver, appleSpawnTime, rocksEnabled);
         }
@@ -89,7 +99,7 @@ namespace SnakeCore.View
                     const int NumberOfRocksAdded = 3;
                     for (int i = rocks.Count - NumberOfRocksAdded; i < rocks.Count; i++)
                     {
-                        rockController.Generate(snake, rocks[i]);
+                        rockController.SpawnRocks(snake, rocks[i]);
                     }
                 }
 
@@ -123,17 +133,125 @@ namespace SnakeCore.View
         private void GameOver(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled)
         {
             Console.SetCursorPosition(0, 0);
-            const string GameOver = "Game Over!\nYou will return to Main menu.\nPress any key...";
+            const string GameOver = "Game Over!\nPress any key...";
             Console.WriteLine(GameOver);
             Console.ReadKey(true);
+            this.LeaderboardScreen();
             this.ReturnToMainMenu(difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
+        }
+
+        private void LeaderboardScreen()
+        {
+            const int alphabetLettersCount = 26;
+            char[] alphabet = new char[alphabetLettersCount];
+            int counter = 0;
+
+            for (char i = 'A'; i < '['; i++)
+            {
+                alphabet[counter] = i;
+                counter++;
+            }
+
+            /* dictionary to hold:  
+             * key      -> int, the score
+             * value    -> string, the name (consisting of three letters) (for now just AAA)
+             * */
+
+            string currentLetterCombination = string.Empty;
+
+            Console.Clear();
+            Console.WriteLine("Enter your name by\npressing Up, Down and Enter on the\ndesired letter!");
+
+            
+            int widthLettersDisplay = Constants.GameWidth / 2;
+            const int heightLettersDisplay = Constants.GameHeight / 4;
+            Console.SetCursorPosition(widthLettersDisplay, heightLettersDisplay);
+
+            Console.CursorVisible = true;
+
+            int currentLetter = 0;
+            Console.Write(alphabet[currentLetter]);
+
+            int letterCounter = 0;
+            while (letterCounter < 3)
+            {
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo userInput = Console.ReadKey();
+
+                    while (Console.KeyAvailable)
+                    {
+                        Console.ReadKey();
+                    }
+
+                    if (userInput.Key == ConsoleKey.UpArrow)
+                    {
+                        if (currentLetter < alphabetLettersCount - 1)
+                        {
+                            currentLetter++;
+                            Console.SetCursorPosition(widthLettersDisplay, heightLettersDisplay);
+                            Console.Write(alphabet[currentLetter]);
+                        }
+                    }
+                    else if (userInput.Key == ConsoleKey.DownArrow)
+                    {
+                        //check if underflooding the alphabet
+                        if (currentLetter > 0)
+                        {
+                            currentLetter--;
+                            Console.SetCursorPosition(widthLettersDisplay, heightLettersDisplay);
+                            Console.Write(alphabet[currentLetter]);
+                        }
+                    }
+                    else if (userInput.Key == ConsoleKey.Enter)
+                    {
+#pragma warning disable S1643 // Strings should not be concatenated using '+' in a loop
+                        currentLetterCombination += alphabet[currentLetter];
+#pragma warning restore S1643 // Strings should not be concatenated using '+' in a loop
+
+                        letterCounter++;
+                        currentLetter = 0;
+
+                        widthLettersDisplay++;
+
+                        if (letterCounter < 3)
+                        {
+                            Console.SetCursorPosition(widthLettersDisplay, heightLettersDisplay);
+                            Console.Write(alphabet[currentLetter]);
+                        }
+                    }
+                }
+            }
+
+            // fix this (given score)
+            int hiScore = 2018/*score*/;
+
+           
+
+            scoreboard[hiScore] = currentLetterCombination;
+
+            const int scoreUIwidthPosition = Constants.GameWidth / 2;
+            const int scoreUIheightPosition = Constants.GameHeight / 4;
+
+            int increaserAndDisplayer = 1;
+
+            foreach (var kvp in scoreboard.OrderByDescending(x => x.Key).Take(9))
+            {
+                Console.SetCursorPosition(scoreUIwidthPosition, scoreUIheightPosition + increaserAndDisplayer);
+                Console.Write($"{increaserAndDisplayer} {kvp.Value} - {kvp.Key}");
+                increaserAndDisplayer++;
+            }
+            Console.CursorVisible = false;
+
+            Console.WriteLine("\n\n\nPress space \nto play again!");
+            Console.ReadKey();
         }
 
         /// <summary>
         /// Returns the player to main menu.
         /// </summary>
         private void ReturnToMainMenu(double difficulty, double changeDifficulty, double worstDifficulty, int appleSpawnTime, bool rocksEnabled) => new MainMenu(false, difficulty, changeDifficulty, worstDifficulty, appleSpawnTime, rocksEnabled);
-                
+
         /// <summary>
         /// Handles key input.
         /// </summary>
@@ -167,7 +285,7 @@ namespace SnakeCore.View
                 else if (userInput.Key == ConsoleKey.Escape)
                 {
                     return true;
-                } 
+                }
             }
 
             return false;

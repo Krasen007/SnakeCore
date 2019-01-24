@@ -7,16 +7,17 @@ namespace SnakeCore.Controllers
 {
     using System;
     using SnakeCore.Models;
+    using SnakeCore.Tools;
 
     public class AppleController
     {
         private readonly int spawnTimer;
-        private readonly Random rng;
+        private readonly Random random;
         private int timeSinceLastSpawn;
 
         public AppleController(int appleSpawnTime)
         {
-            this.rng = new Random();
+            this.random = new Random();
 
             this.timeSinceLastSpawn = Environment.TickCount;
             this.spawnTimer = appleSpawnTime;
@@ -35,8 +36,8 @@ namespace SnakeCore.Controllers
         {
             do
             {
-                apple.Position.X = this.rng.Next(0, Console.BufferWidth);
-                apple.Position.Y = this.rng.Next(0, Console.BufferHeight);
+                apple.Position.X = this.random.Next(0, Constants.GameWidth);
+                apple.Position.Y = this.random.Next(0, Constants.GameHeight);
             }
             while (this.CollidesWithElements(snake, apple));
         }

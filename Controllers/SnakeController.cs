@@ -27,24 +27,25 @@ namespace SnakeCore.Controllers
                 this.snake.SnakeElements[i].Y = this.snake.SnakeElements[i - 1].Y;
             }
 
+            // Add movement direction
             this.snake.SnakeElements[0].Move(direction);
 
             // Teleport snake
-            if (this.snake.SnakeElements[0].X == Console.BufferWidth)
+            if (this.snake.SnakeElements[0].X == Constants.GameWidth)
             {
                 this.snake.SnakeElements[0].X = 0;
             }
             else if (this.snake.SnakeElements[0].X == -1)
             {
-                this.snake.SnakeElements[0].X = Console.BufferWidth - 1;
+                this.snake.SnakeElements[0].X = Constants.GameWidth - 1;
             }
-            else if (this.snake.SnakeElements[0].Y == Console.BufferHeight)
+            else if (this.snake.SnakeElements[0].Y == Constants.GameHeight)
             {
                 this.snake.SnakeElements[0].Y = 0;
             }
             else if (this.snake.SnakeElements[0].Y == -1)
             {
-                this.snake.SnakeElements[0].Y = Console.BufferHeight - 1;
+                this.snake.SnakeElements[0].Y = Constants.GameHeight - 1;
             }
         }
     }
