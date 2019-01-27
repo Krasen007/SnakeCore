@@ -43,7 +43,7 @@ namespace SnakeCore
             Console.Clear();
             Console.CursorVisible = false;
             Console.BufferWidth = Console.WindowWidth = Constants.GameWidth;
-            Console.BufferHeight = Console.WindowHeight = Constants.GameHeight;
+            Console.BufferHeight = Console.WindowHeight = Constants.GameHeight;            
         }
 
         /// <summary>

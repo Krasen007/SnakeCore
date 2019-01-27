@@ -22,8 +22,8 @@ namespace SnakeCore.Controllers
         {                        
             do
             {
-                rock.Position.X = this.random.Next(0, Constants.GameWidth);
-                rock.Position.Y = this.random.Next(0, Constants.GameHeight);
+                rock.Position.X = this.random.Next(0, Constants.PlayWidth);
+                rock.Position.Y = this.random.Next(0, Constants.PlayHeigth);
             }
             while (this.CollidesWithElements(snake, rock));
         }

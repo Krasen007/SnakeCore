@@ -27,7 +27,7 @@ namespace SnakeCore.View
             this.worstDifficulty = Constants.DefaultWorstDifficulty;
             this.appleSpawnTime = Constants.DefaultAppleSpawnTime;
             this.rocksEnabled = Constants.DefaultRocksEnabled;
-
+            
             this.DrawMainMenu(firstRun);
         }
 
@@ -42,13 +42,13 @@ namespace SnakeCore.View
             this.DrawMainMenu(firstRun);
         }
 
+
         /// <summary>
         /// Draws the UI of the main menu and displays current settings.
         /// </summary>
         private void DrawMainMenu(bool firstRun)
         {
             Console.Clear();
-
             string menuText = "Main menu\n" +
                             "1: New game\n" +
                             "2: Settings\n" +
@@ -62,33 +62,43 @@ namespace SnakeCore.View
 
             string pickMenuItem = Console.ReadLine();
 
-            const string NewGame = "1";
-            const string Settings = "2";
-            const string Exit = "3";
-            if (pickMenuItem.ToUpper() == NewGame)
+            switch (pickMenuItem)
             {
-                if (firstRun)
-                {
-                    this.DefaultNewGame();
-                }
-                else
-                {
-                    this.SelectedCustomGame();
-                }
+                case "1":
+                    NewGameMenuItem(firstRun);
+                    break;
+                case "2":
+                    SettingsMenuItem();
+                    break;
+                case "3":
+                    ExitMenuItem();
+                    break;
+                default:
+                    DrawMainMenu(firstRun);
+                    break;
             }
-            else if (pickMenuItem.ToUpper() == Settings)
+        }
+
+        private void NewGameMenuItem(bool firstRun)
+        {
+            if (firstRun)
             {
-                this.SettingsMenu();
-            }
-            else if (pickMenuItem.ToUpper() == Exit)
-            {
-                this.DrawGameExitThankYou();
+                this.DefaultNewGame();
             }
             else
             {
-                this.DrawMainMenu(firstRun);
+                this.SelectedCustomGame();
             }
         }
+        private void SettingsMenuItem()
+        {
+            this.SettingsMenu();
+        }
+        private void ExitMenuItem()
+        {
+            this.DrawGameExitThankYou();
+        }
+
 
         /// <summary>
         /// Lets the user select game mode.

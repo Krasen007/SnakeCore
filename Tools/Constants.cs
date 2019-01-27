@@ -8,8 +8,12 @@
     public class Constants
     {
         internal const string GameName = "Snake Core";
+        internal const int PlayWidth = 50;
+        internal const int PlayHeigth = 25;
+
         internal const int GameWidth = 50;
-        internal const int GameHeight = 25;
+        internal const int GameHeight = 26;
+
         internal const double DefaultDifficulty = 150;
         internal const double DefaultChangeDifficulty = 1;
         internal const double DefaultWorstDifficulty = 50;

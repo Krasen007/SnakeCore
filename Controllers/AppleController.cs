@@ -36,8 +36,8 @@ namespace SnakeCore.Controllers
         {
             do
             {
-                apple.Position.X = this.random.Next(0, Constants.GameWidth);
-                apple.Position.Y = this.random.Next(0, Constants.GameHeight);
+                apple.Position.X = this.random.Next(0, Constants.PlayWidth);
+                apple.Position.Y = this.random.Next(0, Constants.PlayHeigth);
             }
             while (this.CollidesWithElements(snake, apple));
         }

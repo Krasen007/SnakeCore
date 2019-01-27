@@ -38,7 +38,7 @@ namespace SnakeCore.View
                 headSymbol = '^';
             }
 
-            if ((this.snake.SnakeElements[0].X == Constants.GameWidth - 1) && (this.snake.SnakeElements[0].Y == Constants.GameHeight - 1))
+            if ((this.snake.SnakeElements[0].X == Constants.PlayWidth - 1) && (this.snake.SnakeElements[0].Y == Constants.PlayHeigth - 1))
             {
                 // test fix
                 Console.SetCursorPosition(5, 5);
@@ -53,7 +53,7 @@ namespace SnakeCore.View
             {
                 if (this.snake.SnakeElements.Count > 1)
                 {
-                    if ((this.snake.SnakeElements[i].X == Constants.GameWidth - 1) && (this.snake.SnakeElements[i].Y == Constants.GameHeight - 1))
+                    if ((this.snake.SnakeElements[i].X == Constants.PlayWidth - 1) && (this.snake.SnakeElements[i].Y == Constants.PlayHeigth - 1))
                     {
                         // test fix
                         Console.SetCursorPosition(5, 5);
@@ -72,14 +72,14 @@ namespace SnakeCore.View
         {
             for (int i = 0; i < this.snake.SnakeElements.Count; i++)
             {
-                if ((this.snake.SnakeElements[i].X == Constants.GameWidth - 1) && (this.snake.SnakeElements[i].Y == Constants.GameHeight - 1))
+                if ((this.snake.SnakeElements[i].X == Constants.PlayWidth - 1) && (this.snake.SnakeElements[i].Y == Constants.PlayHeigth - 1))
                 {
                     // test fix
                     Console.SetCursorPosition(5, 5);
                 }
                 else
                 {
-                    if ((this.snake.SnakeElements[this.snake.SnakeElements.Count - 1].X == Constants.GameWidth - 1) && (this.snake.SnakeElements[this.snake.SnakeElements.Count - 1].Y == Constants.GameHeight - 1))
+                    if ((this.snake.SnakeElements[this.snake.SnakeElements.Count - 1].X == Constants.PlayWidth - 1) && (this.snake.SnakeElements[this.snake.SnakeElements.Count - 1].Y == Constants.PlayHeigth - 1))
                     {
                         Console.SetCursorPosition(5, 5);
                     }

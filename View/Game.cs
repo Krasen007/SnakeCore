@@ -16,6 +16,7 @@ namespace SnakeCore.View
     public class Game
     {
         private readonly Dictionary<int, string> scoreboard;
+        private int score = 0;
 
         /// <summary>
         /// Starts new game.
@@ -29,7 +30,7 @@ namespace SnakeCore.View
             this.scoreboard = new Dictionary<int, string>();
             for (int i = 1; i < 10; i++)
             {
-                scoreboard[i] = "AAA";
+                this.scoreboard[i] = "AAA";
             }
 
             this.MainGame(difficulty, changeDifficulty, worstDifficulty, isGameOver, appleSpawnTime, rocksEnabled);
@@ -82,6 +83,16 @@ namespace SnakeCore.View
             // Main Loop
             while (!isGameOver)
             {
+                // Ui
+                Console.SetCursorPosition(0, Constants.GameHeight - 1);
+                string uiScore = "Score: " + this.score + " ";
+                Console.Write(uiScore);                
+                for (int i = uiScore.ToString().Length; i < Constants.GameWidth - 1; i++)
+                {
+                    Console.Write(".");
+                }
+
+
                 if (this.InputHandler(direction))
                 {
                     isGameOver = true;
@@ -142,8 +153,8 @@ namespace SnakeCore.View
 
         private void LeaderboardScreen()
         {
-            const int alphabetLettersCount = 26;
-            char[] alphabet = new char[alphabetLettersCount];
+            const int AlphabetLettersCount = 26;
+            char[] alphabet = new char[AlphabetLettersCount];
             int counter = 0;
 
             for (char i = 'A'; i < '['; i++)
@@ -162,10 +173,9 @@ namespace SnakeCore.View
             Console.Clear();
             Console.WriteLine("Enter your name by\npressing Up, Down and Enter on the\ndesired letter!");
 
-            
-            int widthLettersDisplay = Constants.GameWidth / 2;
-            const int heightLettersDisplay = Constants.GameHeight / 4;
-            Console.SetCursorPosition(widthLettersDisplay, heightLettersDisplay);
+            int widthLettersDisplay = Constants.PlayWidth / 2;
+            const int HeightLettersDisplay = Constants.PlayHeigth / 4;
+            Console.SetCursorPosition(widthLettersDisplay, HeightLettersDisplay);
 
             Console.CursorVisible = true;
 
@@ -186,20 +196,20 @@ namespace SnakeCore.View
 
                     if (userInput.Key == ConsoleKey.UpArrow)
                     {
-                        if (currentLetter < alphabetLettersCount - 1)
+                        if (currentLetter < AlphabetLettersCount - 1)
                         {
                             currentLetter++;
-                            Console.SetCursorPosition(widthLettersDisplay, heightLettersDisplay);
+                            Console.SetCursorPosition(widthLettersDisplay, HeightLettersDisplay);
                             Console.Write(alphabet[currentLetter]);
                         }
                     }
                     else if (userInput.Key == ConsoleKey.DownArrow)
                     {
-                        //check if underflooding the alphabet
+                        // check if underflooding the alphabet
                         if (currentLetter > 0)
                         {
                             currentLetter--;
-                            Console.SetCursorPosition(widthLettersDisplay, heightLettersDisplay);
+                            Console.SetCursorPosition(widthLettersDisplay, HeightLettersDisplay);
                             Console.Write(alphabet[currentLetter]);
                         }
                     }
@@ -216,7 +226,7 @@ namespace SnakeCore.View
 
                         if (letterCounter < 3)
                         {
-                            Console.SetCursorPosition(widthLettersDisplay, heightLettersDisplay);
+                            Console.SetCursorPosition(widthLettersDisplay, HeightLettersDisplay);
                             Console.Write(alphabet[currentLetter]);
                         }
                     }
@@ -224,23 +234,22 @@ namespace SnakeCore.View
             }
 
             // fix this (given score)
-            int hiScore = 2018/*score*/;
+            int hiscore = this.score;
 
-           
+            this.scoreboard[hiscore] = currentLetterCombination;
 
-            scoreboard[hiScore] = currentLetterCombination;
-
-            const int scoreUIwidthPosition = Constants.GameWidth / 2;
-            const int scoreUIheightPosition = Constants.GameHeight / 4;
+            const int ScoreUiWidthPosition = Constants.PlayWidth / 2;
+            const int ScoreUiHeightPosition = Constants.PlayHeigth / 4;
 
             int increaserAndDisplayer = 1;
 
-            foreach (var kvp in scoreboard.OrderByDescending(x => x.Key).Take(9))
+            foreach (var kvp in this.scoreboard.OrderByDescending(x => x.Key).Take(9))
             {
-                Console.SetCursorPosition(scoreUIwidthPosition, scoreUIheightPosition + increaserAndDisplayer);
+                Console.SetCursorPosition(ScoreUiWidthPosition, ScoreUiHeightPosition + increaserAndDisplayer);
                 Console.Write($"{increaserAndDisplayer} {kvp.Value} - {kvp.Key}");
                 increaserAndDisplayer++;
             }
+
             Console.CursorVisible = false;
 
             Console.WriteLine("\n\n\nPress space \nto play again!");
@@ -298,6 +307,8 @@ namespace SnakeCore.View
         {
             if (apple.IsActive && snake.SnakeElements[0].IsEqualTo(apple.Position))
             {
+                this.score += 1;
+
                 apple.IsActive = false;
                 snake.SnakeElements.Add(
                     new Vector2(
